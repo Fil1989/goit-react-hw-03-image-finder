@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const ImageGalleryItem = ({ array, onModalOpen }) => {
   return (
     <>
@@ -13,5 +15,9 @@ const ImageGalleryItem = ({ array, onModalOpen }) => {
       ))}
     </>
   );
+};
+ImageGalleryItem.propTypes = {
+  array: PropTypes.array.isRequired,
+  onModalOpen: PropTypes.func.isRequired,
 };
 export default ImageGalleryItem;

@@ -1,4 +1,5 @@
 import SearchIcon from "@material-ui/icons/Search";
+import PropTypes from "prop-types";
 
 const Searchbar = ({ onChange, onSubmit }) => {
   return (
@@ -23,5 +24,9 @@ const Searchbar = ({ onChange, onSubmit }) => {
       </header>
     </>
   );
+};
+Searchbar.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 export default Searchbar;
