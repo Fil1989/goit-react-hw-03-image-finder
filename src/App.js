@@ -1,6 +1,5 @@
 import { Component } from "react";
 import Searchbar from "./components/Searchbar";
-// import SearchIcon from "@material-ui/icons/Search";
 import ImageGallery from "./components/ImageGallery";
 import fetchThePictures from "./serverApi";
 import Button from "./components/Button";
@@ -17,6 +16,7 @@ class App extends Component {
     },
     loading: false,
     scroll: 0,
+    button: false,
   };
 
   handleChange = (e) => {
@@ -27,13 +27,13 @@ class App extends Component {
     fetchThePictures.resetPage();
     fetchThePictures.setQuery(e);
     this.setState({ loading: true });
+
     fetchThePictures
       .fetchFunction()
       .then((res) => {
-        this.setState({ array: res.data.hits, loading: false });
+        this.setState({ array: res.data.hits, loading: false, button: true });
       })
       .catch((error) => console.log(error));
-    // this.setState({ loading: false });
   };
   handleLoadMore = () => {
     fetchThePictures.incrementOfPage();
@@ -47,7 +47,6 @@ class App extends Component {
         this.setState((prevState) => ({
           array: [...prevState.array, ...res.data.hits],
         }));
-        console.dir(document.documentElement);
         window.scrollTo({
           top: this.state.scroll - 190,
           behavior: "smooth",
@@ -85,20 +84,13 @@ class App extends Component {
         />
         <section className="spinner">
           {this.state.loading && (
-            <Loader
-              type="Hearts"
-              color="#00BFFF"
-              height={100}
-              width={100}
-              // timeout={3000} //3 secs
-            />
+            <Loader type="Hearts" color="#00BFFF" height={100} width={100} />
           )}
         </section>
 
-        <Button
-          onLoadMore={this.handleLoadMore}
-          // doingScroll={this.handleScroll}
-        />
+        {this.state.button && !!this.state.array.length && (
+          <Button onLoadMore={this.handleLoadMore} />
+        )}
 
         {this.state.modal.open && (
           <Modal

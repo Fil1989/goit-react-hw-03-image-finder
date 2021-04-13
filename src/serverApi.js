@@ -5,9 +5,15 @@ const fetchThePictures = {
   query: "",
   fetchFunction() {
     axios.defaults.baseURL = "https://pixabay.com/api";
-    return axios.get(
-      `/?key=20277592-c9806cff80bff398502402406&q=${this.query}&page=${this.page}&image_type=photo&orientation=horizontal&per_page=12`
-    );
+    if (this.query !== "") {
+      return axios.get(
+        `/?key=20277592-c9806cff80bff398502402406&q=${this.query}&page=${this.page}&image_type=photo&orientation=horizontal&per_page=12`
+      );
+    } else {
+      return axios.get(
+        `/?key=20277592-c9806cff80bff398502402406&q=nhugyftrdyukghl&page=${this.page}&image_type=photo&orientation=horizontal&per_page=12`
+      );
+    }
   },
   incrementOfPage() {
     this.page += 1;

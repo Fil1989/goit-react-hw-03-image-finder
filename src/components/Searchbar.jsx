@@ -1,4 +1,4 @@
-// import SearchIcon from "@material-ui/icons/Search";
+import SearchIcon from "@material-ui/icons/Search";
 
 const Searchbar = ({ onChange, onSubmit }) => {
   return (
@@ -7,6 +7,7 @@ const Searchbar = ({ onChange, onSubmit }) => {
         <form className="SearchForm" onSubmit={onSubmit}>
           <button type="submit" className="SearchForm-button">
             <span className="SearchForm-button-label">Search</span>
+            <SearchIcon />
           </button>
 
           <input
