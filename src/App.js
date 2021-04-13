@@ -1,11 +1,11 @@
 import { Component } from "react";
-// import axios from "axios";
 import Searchbar from "./components/Searchbar";
 // import SearchIcon from "@material-ui/icons/Search";
 import ImageGallery from "./components/ImageGallery";
 import fetchThePictures from "./serverApi";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
+import Loader from "react-loader-spinner";
 
 class App extends Component {
   state = {
@@ -15,6 +15,8 @@ class App extends Component {
       open: false,
       imageSrc: "",
     },
+    loading: false,
+    scroll: 0,
   };
 
   handleChange = (e) => {
@@ -24,22 +26,35 @@ class App extends Component {
     e.preventDefault();
     fetchThePictures.resetPage();
     fetchThePictures.setQuery(e);
-    fetchThePictures.fetchFunction().then((res) => {
-      this.setState({ array: res.data.hits });
-    });
-    console.log(this.state);
+    this.setState({ loading: true });
+    fetchThePictures
+      .fetchFunction()
+      .then((res) => {
+        this.setState({ array: res.data.hits, loading: false });
+      })
+      .catch((error) => console.log(error));
+    // this.setState({ loading: false });
   };
   handleLoadMore = () => {
     fetchThePictures.incrementOfPage();
-    fetchThePictures.fetchFunction().then((res) => {
-      this.setState((prevState) => ({
-        array: [...prevState.array, ...res.data.hits],
-      }));
+    this.setState({
+      loading: true,
+      scroll: document.documentElement.scrollHeight,
     });
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
+    fetchThePictures
+      .fetchFunction()
+      .then((res) => {
+        this.setState((prevState) => ({
+          array: [...prevState.array, ...res.data.hits],
+        }));
+        console.dir(document.documentElement);
+        window.scrollTo({
+          top: this.state.scroll - 190,
+          behavior: "smooth",
+        });
+        this.setState({ loading: false });
+      })
+      .catch((error) => console.log(error));
   };
   handleModalOpen = (e) => {
     this.setState({
@@ -54,6 +69,7 @@ class App extends Component {
       });
     }
   };
+
   render() {
     return (
       <div className="App">
@@ -67,7 +83,23 @@ class App extends Component {
           array={this.state.array}
           onModalOpen={this.handleModalOpen}
         />
-        <Button onLoadMore={this.handleLoadMore} />
+        <section className="spinner">
+          {this.state.loading && (
+            <Loader
+              type="Hearts"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              // timeout={3000} //3 secs
+            />
+          )}
+        </section>
+
+        <Button
+          onLoadMore={this.handleLoadMore}
+          // doingScroll={this.handleScroll}
+        />
+
         {this.state.modal.open && (
           <Modal
             imageSrc={this.state.modal.imageSrc}

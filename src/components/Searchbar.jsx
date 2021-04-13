@@ -20,20 +20,6 @@ const Searchbar = ({ onChange, onSubmit }) => {
           />
         </form>
       </header>
-      {/* <form onSubmit={onSubmit} className="Searchbar">
-        <div className="App_input">
-          <input
-            type="text"
-            name="search"
-            placeholder="Search for"
-            onChange={onChange}
-            // value={search}
-          />
-          <button type="submit">
-            <SearchIcon />
-          </button>
-        </div>
-      </form> */}
     </>
   );
 };

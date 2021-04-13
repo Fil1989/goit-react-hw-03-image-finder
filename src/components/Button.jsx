@@ -1,9 +1,11 @@
-// import fetchThePictures from "../serverApi";
-const Button = ({ onLoadMore }) => {
-  return (
-    <button type="button" onClick={onLoadMore} className="Button">
-      Load more
-    </button>
-  );
-};
+import { Component } from "react";
+class Button extends Component {
+  render() {
+    return (
+      <button type="button" onClick={this.props.onLoadMore} className="Button">
+        Load more
+      </button>
+    );
+  }
+}
 export default Button;

@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { Component } from 'react';
 
 const fetchThePictures = {
   page: 1,

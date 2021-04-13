@@ -209,6 +209,11 @@ img {
   background-color: #303f9f;
 }
 
+.spinner {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* .App {
   text-align: center;
 } */
